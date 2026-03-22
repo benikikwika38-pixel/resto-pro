@@ -1,19 +1,15 @@
-// USERS
 const users = [
   { nom: "kikwika", pass: "223345" }
 ];
 
-// PLATS + STOCK
 let plats = JSON.parse(localStorage.getItem("plats")) || [
   { nom: "Pizza", prix: 5000, stock: 10 },
   { nom: "Burger", prix: 3000, stock: 10 },
   { nom: "Salade", prix: 2000, stock: 10 }
 ];
 
-// COMMANDES
 let commandes = JSON.parse(localStorage.getItem("commandes")) || [];
 
-// LOGIN
 function login() {
   let u = document.getElementById("username").value;
   let p = document.getElementById("password").value;
@@ -24,11 +20,10 @@ function login() {
     localStorage.setItem("user", u);
     window.location.href = "dashboard.html";
   } else {
-    document.getElementById("msg").innerText = "Nom ou mot de passe incorrect";
+    document.getElementById("msg").innerText = "Erreur de connexion";
   }
 }
 
-// LOAD DASHBOARD
 if(document.getElementById("welcome")){
   document.getElementById("welcome").innerText =
     "Bonjour " + (localStorage.getItem("user") || "Employé");
@@ -37,7 +32,6 @@ if(document.getElementById("welcome")){
   show();
 }
 
-// LOAD PLATS
 function loadPlats(){
   const select = document.getElementById("platSelect");
   select.innerHTML = "";
@@ -50,7 +44,6 @@ function loadPlats(){
   });
 }
 
-// ADD COMMANDE
 function ajouterCommande(){
   let nom = document.getElementById("platSelect").value;
   let q = parseInt(document.getElementById("quantite").value);
@@ -62,8 +55,7 @@ function ajouterCommande(){
       id: Date.now(),
       plat: nom,
       quantite: q,
-      total: p.prix*q,
-      date: new Date().toLocaleDateString()
+      total: p.prix*q
     });
 
     p.stock -= q;
@@ -74,7 +66,6 @@ function ajouterCommande(){
   }
 }
 
-// SHOW COMMANDES
 function show(){
   const list = document.getElementById("list");
   list.innerHTML = "";
@@ -85,8 +76,13 @@ function show(){
     let li = document.createElement("li");
 
     li.innerHTML = `
-      ${c.plat} x${c.quantite} = ${c.total} FC
-      <button onclick="del(${c.id})" style="color:red;">❌</button>
+      <div class="flex justify-between items-center bg-gray-700 p-3 rounded">
+        <span>${c.plat} x${c.quantite} = ${c.total} FC</span>
+        <button onclick="del(${c.id})"
+          class="bg-red-600 px-2 py-1 rounded hover:bg-red-500">
+          ❌
+        </button>
+      </div>
     `;
 
     list.appendChild(li);
@@ -100,20 +96,17 @@ function show(){
   loadPlats();
 }
 
-// DELETE
 function del(id){
   commandes = commandes.filter(c=>c.id!==id);
   save();
   show();
 }
 
-// SAVE
 function save(){
   localStorage.setItem("commandes", JSON.stringify(commandes));
   localStorage.setItem("plats", JSON.stringify(plats));
 }
 
-// GRAPH
 function graph(){
   let stats = {};
 
@@ -135,11 +128,10 @@ function graph(){
   });
 }
 
-// STOCK ALERT
 function alertStock(){
   plats.forEach(p=>{
     if(p.stock<=3){
       alert("⚠ Stock faible: " + p.nom);
     }
   });
-}
+  }
