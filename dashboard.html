@@ -5,24 +5,55 @@
   <title>Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="p-10 bg-gray-100 font-sans">
 
-<h1 class="text-3xl font-bold mb-5">Dashboard</h1>
-<p id="welcome" class="mb-5"></p>
+<body class="bg-gray-900 text-white font-sans">
 
-<h2 class="font-bold">Ajouter commande</h2>
-<select id="platSelect" class="border p-2"></select>
-<input id="quantite" type="number" class="border p-2" placeholder="Quantité">
-<button onclick="ajouterCommande()" class="bg-green-600 text-white p-2 rounded">Ajouter</button>
+<!-- HEADER -->
+<div class="flex justify-between items-center p-5 bg-gray-800 shadow">
+  <h1 class="text-2xl font-bold text-yellow-400">🍽 Resto Pro</h1>
+  <p id="welcome"></p>
+</div>
 
-<h2 class="mt-5 font-bold">Commandes</h2>
-<ul id="list" class="mt-2"></ul>
+<div class="grid md:grid-cols-3 gap-5 p-5">
 
-<h2 class="mt-5 font-bold">Total ventes :</h2>
-<p id="total"></p>
+  <!-- AJOUT -->
+  <div class="bg-gray-800 p-5 rounded-xl shadow">
+    <h2 class="text-xl font-bold mb-3">Ajouter commande</h2>
 
-<h2 class="mt-10 font-bold">Statistiques</h2>
-<canvas id="chart"></canvas>
+    <select id="platSelect" class="w-full p-2 mb-2 text-black rounded"></select>
+
+    <input id="quantite" type="number" placeholder="Quantité"
+      class="w-full p-2 mb-3 text-black rounded">
+
+    <button onclick="ajouterCommande()"
+      class="w-full bg-yellow-400 text-black p-2 rounded font-bold hover:bg-yellow-300">
+      Ajouter
+    </button>
+  </div>
+
+  <!-- COMMANDES -->
+  <div class="bg-gray-800 p-5 rounded-xl shadow md:col-span-2">
+    <h2 class="text-xl font-bold mb-3">Commandes</h2>
+    <ul id="list" class="space-y-2"></ul>
+  </div>
+
+</div>
+
+<div class="grid md:grid-cols-2 gap-5 p-5">
+
+  <!-- TOTAL -->
+  <div class="bg-green-600 p-5 rounded-xl text-center shadow">
+    <h2 class="text-xl">💰 Total ventes</h2>
+    <p id="total" class="text-3xl font-bold mt-2"></p>
+  </div>
+
+  <!-- GRAPH -->
+  <div class="bg-gray-800 p-5 rounded-xl shadow">
+    <h2 class="text-xl mb-3">📊 Statistiques</h2>
+    <canvas id="chart"></canvas>
+  </div>
+
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="dashboard.js"></script>
