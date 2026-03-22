@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex justify-center items-center h-screen bg-gray-100">
+
+<div class="bg-white p-10 rounded shadow w-80">
+  <h2 class="text-2xl font-bold mb-5 text-center">Connexion</h2>
+  <input id="username" placeholder="Nom" class="border p-2 w-full mb-3">
+  <input id="password" type="password" placeholder="Mot de passe" class="border p-2 w-full mb-3">
+  <p id="msg" class="text-red-500"></p>
+  <button onclick="login()" class="bg-red-600 text-white w-full p-2 mt-3 rounded">Connexion</button>
+</div>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
