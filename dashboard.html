@@ -16,7 +16,7 @@
 
 <div class="grid md:grid-cols-3 gap-5 p-5">
 
-  <!-- AJOUT -->
+  <!-- AJOUT COMMANDE -->
   <div class="bg-gray-800 p-5 rounded-xl shadow">
     <h2 class="text-xl font-bold mb-3">Ajouter commande</h2>
 
@@ -31,7 +31,7 @@
     </button>
   </div>
 
-  <!-- COMMANDES -->
+  <!-- LISTE COMMANDES -->
   <div class="bg-gray-800 p-5 rounded-xl shadow md:col-span-2">
     <h2 class="text-xl font-bold mb-3">Commandes</h2>
     <ul id="list" class="space-y-2"></ul>
@@ -41,7 +41,7 @@
 
 <div class="grid md:grid-cols-2 gap-5 p-5">
 
-  <!-- TOTAL -->
+  <!-- TOTAL VENTES -->
   <div class="bg-green-600 p-5 rounded-xl text-center shadow">
     <h2 class="text-xl">💰 Total ventes</h2>
     <p id="total" class="text-3xl font-bold mt-2"></p>
@@ -55,8 +55,14 @@
 
 </div>
 
+<!-- CALENDRIER HISTORIQUE -->
+<div class="bg-gray-800 p-5 rounded-xl shadow mt-5">
+  <h2 class="text-xl mb-3">📅 Historique commandes</h2>
+  <ul id="calendarList" class="space-y-2"></ul>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="dashboard.js"></script>
 
 </body>
-</html>
+      </html>
