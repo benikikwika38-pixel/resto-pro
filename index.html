@@ -18,31 +18,29 @@
   <p class="mt-4 text-gray-400">Gestion moderne de votre restaurant</p>
 </section>
 
-<section class="grid md:grid-cols-3 gap-5 p-10">
+<section id="menu" class="grid md:grid-cols-3 gap-5 p-10"></section>
 
-  <!-- 15 ALIMENTS -->
+<script>
+let plats = JSON.parse(localStorage.getItem("plats")) || [];
 
-  <div class="bg-gray-800 p-5 rounded-xl text-center"><h3>Pizza</h3><p class="text-yellow-400">5000 FC</p></div>
-  <div class="bg-gray-800 p-5 rounded-xl text-center"><h3>Burger</h3><p class="text-yellow-400">3000 FC</p></div>
-  <div class="bg-gray-800 p-5 rounded-xl text-center"><h3>Salade</h3><p class="text-yellow-400">2000 FC</p></div>
+const menu = document.getElementById("menu");
 
-  <div class="bg-gray-800 p-5 rounded-xl text-center"><h3>Pâtes</h3><p class="text-yellow-400">4500 FC</p></div>
-  <div class="bg-gray-800 p-5 rounded-xl text-center"><h3>Sushi</h3><p class="text-yellow-400">7000 FC</p></div>
-  <div class="bg-gray-800 p-5 rounded-xl text-center"><h3>Steak</h3><p class="text-yellow-400">9000 FC</p></div>
+plats.forEach(p=>{
+  let div = document.createElement("div");
 
-  <div class="bg-gray-800 p-5 rounded-xl text-center"><h3>Tacos</h3><p class="text-yellow-400">3500 FC</p></div>
-  <div class="bg-gray-800 p-5 rounded-xl text-center"><h3>Sandwich</h3><p class="text-yellow-400">2500 FC</p></div>
-  <div class="bg-gray-800 p-5 rounded-xl text-center"><h3>Poulet rôti</h3><p class="text-yellow-400">6000 FC</p></div>
+  div.className = "bg-gray-800 p-5 rounded-xl shadow text-center";
 
-  <div class="bg-gray-800 p-5 rounded-xl text-center"><h3>Quiche</h3><p class="text-yellow-400">4000 FC</p></div>
-  <div class="bg-gray-800 p-5 rounded-xl text-center"><h3>Soupe</h3><p class="text-yellow-400">2000 FC</p></div>
-  <div class="bg-gray-800 p-5 rounded-xl text-center"><h3>Frites</h3><p class="text-yellow-400">1500 FC</p></div>
+  div.innerHTML = `
+    <h3 class="text-xl font-bold">${p.nom}</h3>
+    <p class="text-yellow-400">${p.prix} FC</p>
+    <p class="${p.stock <= 3 ? 'text-red-400' : 'text-green-400'}">
+      Stock: ${p.stock}
+    </p>
+  `;
 
-  <div class="bg-gray-800 p-5 rounded-xl text-center"><h3>Omelette</h3><p class="text-yellow-400">3000 FC</p></div>
-  <div class="bg-gray-800 p-5 rounded-xl text-center"><h3>Crêpe</h3><p class="text-yellow-400">2500 FC</p></div>
-  <div class="bg-gray-800 p-5 rounded-xl text-center"><h3>Glace</h3><p class="text-yellow-400">1500 FC</p></div>
-
-</section>
+  menu.appendChild(div);
+});
+</script>
 
 </body>
-                                                        </html>
+</html>
