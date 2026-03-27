@@ -6,63 +6,56 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-900 text-white font-sans">
+<body class="bg-gray-900 text-white">
 
-<!-- HEADER -->
-<div class="flex justify-between items-center p-5 bg-gray-800 shadow">
-  <h1 class="text-2xl font-bold text-yellow-400">🍽 Resto Pro</h1>
+<div class="flex justify-between p-5 bg-gray-800">
+  <h1 class="text-yellow-400 text-xl">🍽 Resto Pro</h1>
   <p id="welcome"></p>
 </div>
 
 <div class="grid md:grid-cols-3 gap-5 p-5">
 
-  <!-- AJOUT COMMANDE -->
-  <div class="bg-gray-800 p-5 rounded-xl shadow">
-    <h2 class="text-xl font-bold mb-3">Ajouter commande</h2>
+<div class="bg-gray-800 p-5 rounded">
+<h2>Ajouter commande</h2>
 
-    <select id="platSelect" class="w-full p-2 mb-2 text-black rounded"></select>
+<select id="platSelect" class="w-full p-2 text-black"></select>
 
-    <input id="quantite" type="number" placeholder="Quantité"
-      class="w-full p-2 mb-3 text-black rounded">
+<div class="flex justify-center mt-2">
+<button onclick="moins()" class="bg-red-500 px-3">-</button>
+<input id="quantite" value="1" class="w-10 text-center text-black">
+<button onclick="plus()" class="bg-green-500 px-3">+</button>
+</div>
 
-    <button onclick="ajouterCommande()"
-      class="w-full bg-yellow-400 text-black p-2 rounded font-bold hover:bg-yellow-300">
-      Ajouter
-    </button>
-  </div>
+<button onclick="ajouterCommande()" class="bg-yellow-400 w-full mt-3 p-2 text-black">
+Ajouter
+</button>
+</div>
 
-  <!-- LISTE COMMANDES -->
-  <div class="bg-gray-800 p-5 rounded-xl shadow md:col-span-2">
-    <h2 class="text-xl font-bold mb-3">Commandes</h2>
-    <ul id="list" class="space-y-2"></ul>
-  </div>
+<div class="bg-gray-800 p-5 rounded md:col-span-2">
+<h2>Commandes</h2>
+<ul id="list"></ul>
+</div>
 
 </div>
 
 <div class="grid md:grid-cols-2 gap-5 p-5">
 
-  <!-- TOTAL VENTES -->
-  <div class="bg-green-600 p-5 rounded-xl text-center shadow">
-    <h2 class="text-xl">💰 Total ventes</h2>
-    <p id="total" class="text-3xl font-bold mt-2"></p>
-  </div>
+<div class="bg-green-600 p-5 text-center">
+<h2>Total</h2>
+<p id="total"></p>
+</div>
 
-  <!-- GRAPH -->
-  <div class="bg-gray-800 p-5 rounded-xl shadow">
-    <h2 class="text-xl mb-3">📊 Statistiques</h2>
-    <canvas id="chart"></canvas>
-  </div>
+<div class="bg-gray-800 p-5">
+<h2>Historique</h2>
+<div id="calendarList"></div>
+</div>
 
 </div>
 
-<!-- CALENDRIER HISTORIQUE -->
-<div class="bg-gray-800 p-5 rounded-xl shadow mt-5">
-  <h2 class="text-xl mb-3">📅 Historique commandes</h2>
-  <ul id="calendarList" class="space-y-2"></ul>
-</div>
+<button onclick="resetStock()" class="bg-blue-500 m-5 p-2">
+Reset Stock
+</button>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="dashboard.js"></script>
-
 </body>
-      </html>
+</html>
