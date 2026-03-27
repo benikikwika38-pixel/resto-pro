@@ -1,184 +1,124 @@
-// USERS
-const users = [
-  { nom: "Béni", pass: "1234" }
+const users = [{ nom: "kikwika", pass: "1234" }];
+
+// 15 ALIMENTS
+let defaultPlats = [
+  { nom: "Pizza", prix: 26000, stock: 10 },
+  { nom: "Burger", prix: 23000, stock: 10 },
+  { nom: "Salade", prix: 12000, stock: 10 },
+  { nom: "Pâtes", prix: 20500, stock: 10 },
+  { nom: "Sushi", prix: 17000, stock: 10 },
+  { nom: "Steak", prix: 19000, stock: 10 },
+  { nom: "Tacos", prix: 13500, stock: 10 },
+  { nom: "Sandwich", prix: 22500, stock: 10 },
+  { nom: "Poulet rôti", prix: 26000, stock: 10 },
+  { nom: "Quiche", prix: 24000, stock: 10 },
+  { nom: "Soupe", prix: 12000, stock: 10 },
+  { nom: "Frites", prix: 15000, stock: 10 },
+  { nom: "Omelette", prix: 13000, stock: 10 },
+  { nom: "Crêpe", prix: 12500, stock: 10 },
+  { nom: "Glace", prix: 11500, stock: 10 }
 ];
 
-// PLATS (15 aliments)
-let plats = JSON.parse(localStorage.getItem("plats")) || [
-  { nom: "Pizza", prix: 5000, stock: 10 },
-  { nom: "Burger", prix: 3000, stock: 10 },
-  { nom: "Salade", prix: 2000, stock: 10 },
-  { nom: "Pâtes", prix: 4500, stock: 10 },
-  { nom: "Sushi", prix: 7000, stock: 10 },
-  { nom: "Steak", prix: 9000, stock: 10 },
-  { nom: "Tacos", prix: 3500, stock: 10 },
-  { nom: "Sandwich", prix: 2500, stock: 10 },
-  { nom: "Poulet rôti", prix: 6000, stock: 10 },
-  { nom: "Quiche", prix: 4000, stock: 10 },
-  { nom: "Soupe", prix: 2000, stock: 10 },
-  { nom: "Frites", prix: 1500, stock: 10 },
-  { nom: "Omelette", prix: 3000, stock: 10 },
-  { nom: "Crêpe", prix: 2500, stock: 10 },
-  { nom: "Glace", prix: 1500, stock: 10 }
-];
+// INIT STOCK
+if(!localStorage.getItem("plats")){
+  localStorage.setItem("plats", JSON.stringify(defaultPlats));
+}
 
-// COMMANDES
+let plats = JSON.parse(localStorage.getItem("plats"));
 let commandes = JSON.parse(localStorage.getItem("commandes")) || [];
 
-// --- LOGIN ---
-function login() {
-  let u = document.getElementById("username").value;
-  let p = document.getElementById("password").value;
+// LOGIN
+function login(){
+  let u = username.value;
+  let p = password.value;
 
-  let ok = users.find(x => x.nom === u && x.pass === p);
+  let ok = users.find(x=>x.nom===u && x.pass===p);
 
   if(ok){
     localStorage.setItem("user", u);
-    window.location.href = "dashboard.html";
+    location.href = "dashboard.html";
   } else {
-    document.getElementById("msg").innerText = "Erreur de connexion";
+    msg.innerText = "Erreur";
   }
 }
 
-// --- DASHBOARD INIT ---
+// INIT
 if(document.getElementById("welcome")){
-  document.getElementById("welcome").innerText =
-    "Bonjour " + (localStorage.getItem("user") || "Employé");
-
+  welcome.innerText = "Bonjour " + localStorage.getItem("user");
   loadPlats();
   show();
 }
 
-// --- CHARGER PLATS ---
+// LOAD
 function loadPlats(){
-  const select = document.getElementById("platSelect");
-  select.innerHTML = "";
+  platSelect.innerHTML="";
   plats.forEach(p=>{
-    let o = document.createElement("option");
-    o.value = p.nom;
-    o.innerText = `${p.nom} (${p.stock})`;
-    select.appendChild(o);
+    platSelect.innerHTML += `<option>${p.nom} (${p.stock})</option>`;
   });
 }
 
-// --- AJOUTER COMMANDE ---
+// QUANTITE
+function plus(){ quantite.value++ }
+function moins(){ if(quantite.value>1) quantite.value-- }
+
+// AJOUT
 function ajouterCommande(){
-  let nom = document.getElementById("platSelect").value;
-  let q = parseInt(document.getElementById("quantite").value);
+  let nom = platSelect.value.split(" (")[0];
+  let q = parseInt(quantite.value);
   let p = plats.find(x=>x.nom===nom);
 
-  if(q>0 && p.stock>=q){
-    const now = new Date();
-    commandes.push({
-      id: Date.now(),
-      plat: nom,
-      quantite: q,
-      total: p.prix*q,
-      date: now.toLocaleDateString(),
-      heure: now.toLocaleTimeString()
-    });
+  if(p.stock < q) return alert("Stock insuffisant");
 
-    p.stock -= q;
-    save();
-    show();
-  } else {
-    alert("Stock insuffisant !");
-  }
-}
+  let now = new Date();
 
-// --- AFFICHER COMMANDES ---
-function show(){
-  const list = document.getElementById("list");
-  list.innerHTML = "";
-  let total = 0;
-
-  // Trier les commandes les plus récentes
-  commandes.sort((a,b)=> b.id - a.id);
-
-  commandes.forEach(c=>{
-    let li = document.createElement("li");
-    li.innerHTML = `
-      <div class="flex justify-between items-center bg-gray-700 p-3 rounded">
-        <span>${c.plat} x${c.quantite} = ${c.total} FC</span>
-        <span class="text-gray-300 text-sm">${c.date} ${c.heure}</span>
-        <button onclick="del(${c.id})"
-          class="bg-red-600 px-2 py-1 rounded hover:bg-red-500">
-          ❌
-        </button>
-      </div>
-    `;
-    list.appendChild(li);
-    total += c.total;
+  commandes.push({
+    id: Date.now(),
+    plat: nom,
+    quantite: q,
+    total: p.prix*q,
+    date: now.toLocaleDateString(),
+    heure: now.toLocaleTimeString()
   });
 
-  document.getElementById("total").innerText = total + " FC";
-  graph();
-  alertStock();
-  loadPlats();
-  updateCalendar();
-}
+  p.stock -= q;
 
-// --- SUPPRIMER COMMANDE ---
-function del(id){
-  commandes = commandes.filter(c=>c.id!==id);
   save();
   show();
 }
 
-// --- SAVE DATA ---
-function save(){
-  localStorage.setItem("commandes", JSON.stringify(commandes));
-  localStorage.setItem("plats", JSON.stringify(plats));
-}
+// SHOW
+function show(){
+  list.innerHTML="";
+  let total=0;
 
-// --- GRAPH ---
-function graph(){
-  let stats = {};
   commandes.forEach(c=>{
-    stats[c.plat] = (stats[c.plat]||0) + c.quantite;
+    list.innerHTML += `<li>${c.plat} x${c.quantite} = ${c.total}</li>`;
+    total += c.total;
   });
 
-  const ctx = document.getElementById("chart");
-  new Chart(ctx,{
-    type:"bar",
-    data:{
-      labels:Object.keys(stats),
-      datasets:[{
-        label:"Ventes",
-        data:Object.values(stats),
-        backgroundColor:"rgba(255,215,0,0.7)"
-      }]
-    },
-    options:{ responsive:true }
-  });
+  document.getElementById("total").innerText = total + " FC";
+
+  updateCalendar();
+  loadPlats();
 }
 
-// --- ALERT STOCK ---
-function alertStock(){
-  plats.forEach(p=>{
-    if(p.stock<=3){
-      alert("⚠ Stock faible: " + p.nom);
-    }
-  });
-}
-
-// --- CALENDRIER HISTORIQUE ---
+// CALENDAR
 function updateCalendar(){
-  const calendar = document.getElementById("calendarList");
-  if(!calendar) return;
-
-  calendar.innerHTML = "";
-
-  commandes.sort((a,b)=> b.id - a.id);
-
+  calendarList.innerHTML="";
   commandes.forEach(c=>{
-    let li = document.createElement("li");
-    li.innerHTML = `
-      <div class="flex justify-between bg-gray-700 p-3 rounded">
-        <span>${c.plat} x${c.quantite} = ${c.total} FC</span>
-        <span class="text-gray-300 text-sm">${c.date} ${c.heure}</span>
-      </div>
-    `;
-    calendar.appendChild(li);
+    calendarList.innerHTML += `<p>${c.date} - ${c.heure} : ${c.plat}</p>`;
   });
-      }
+}
+
+// SAVE
+function save(){
+  localStorage.setItem("plats", JSON.stringify(plats));
+  localStorage.setItem("commandes", JSON.stringify(commandes));
+}
+
+// RESET
+function resetStock(){
+  plats = defaultPlats;
+  save();
+  show();
+}
